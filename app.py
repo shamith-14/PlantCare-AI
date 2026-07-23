@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from model.predict import predict_disease
-from utils.gemini_helper import get_disease_details
+from utils.gemini_helper import get_disease_details, is_leaf_image
 import os
 import random
 
@@ -78,6 +78,29 @@ def predict():
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
     file.save(filepath)
 
+    # -------------------------------
+    # Validate image using Gemini AI
+    # -------------------------------
+    if not is_leaf_image(filepath):
+        return render_template(
+            "result.html",
+            image=file.filename,
+            disease="Invalid Image",
+            confidence="--",
+            details="""
+            <h2>Invalid Image</h2>
+
+            <p>
+            The uploaded image does not appear to contain a clear plant leaf suitable
+            for disease detection.
+            </p>
+
+            <p>
+            Please upload a clear image of a plant leaf and try again.
+            </p>
+            """
+        )
+
     # Predict disease using trained model
     disease, confidence = predict_disease(filepath)
 
@@ -87,7 +110,7 @@ def predict():
     except Exception as e:
         print("Gemini Error:", e)
 
-        details = f"""
+        details = """
         <h2>AI Report Unavailable</h2>
 
         <p>
@@ -105,6 +128,7 @@ def predict():
         confidence=f"{confidence:.2f}%",
         details=details
     )
+    
 
 
 if __name__ == "__main__":
