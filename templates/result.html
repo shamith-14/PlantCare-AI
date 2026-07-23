@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PlantCare AI - Analysis Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="result-container">
+
+    <h1>🌿 Plant Disease Analysis</h1>
+
+    <div class="result-card">
+
+        <img
+            src="{{ url_for('static', filename='uploads/' + image) }}"
+            alt="Uploaded Plant Image"
+            class="result-image">
+
+        <h2>
+            Disease:
+            <span>{{ disease }}</span>
+        </h2>
+
+        <h3>
+            Confidence:
+            <span>{{ confidence }}</span>
+        </h3>
+
+    </div>
+
+    <!-- AI Generated Report -->
+    <div class="gemini-card">
+
+        {% if details %}
+            {{ details | safe }}
+        {% else %}
+            <h2>AI Report</h2>
+            <p>Unable to generate the AI report at this time.</p>
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <a href="{{ url_for('home') }}">
+        <button class="analyze-btn">
+            Analyze Another Plant
+        </button>
+    </a>
+
+</div>
+
+</body>
+
+</html>

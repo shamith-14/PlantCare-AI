@@ -1,0 +1,18 @@
+# Dataset
+dataset/
+
+# Virtual Environment
+venv/
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Uploaded images
+static/uploads/
+
+# VS Code
+.vscode/
