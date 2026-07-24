@@ -9,43 +9,67 @@
 <h1 align="center">🌿 PlantCare AI</h1>
 
 <p align="center">
-AI-Powered Plant Disease Detection using MobileNetV2 and Google Gemini AI
+AI-Powered Plant Disease Detection using MobileNetV2 and Google Gemini Vision
+</p>
+
+<p align="center">
+<a href="https://plantcare-ai-9kay.onrender.com">
+<img src="https://img.shields.io/badge/🚀_Live_Demo-Visit-success?style=for-the-badge">
+</a>
+
+<a href="https://linkedin.com/in/shamith-rai-m">
+<img src="https://img.shields.io/badge/LinkedIn-Shamith_Rai_M-0A66C2?style=for-the-badge&logo=linkedin">
+</a>
+
+<a href="https://github.com/shamith-14/PlantCare-AI">
+<img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github">
+</a>
 </p>
 
 <p align="center">
 
-![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python)
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
 ![Flask](https://img.shields.io/badge/Flask-Web_App-black?style=for-the-badge&logo=flask)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-MobileNetV2-orange?style=for-the-badge&logo=tensorflow)
-![Google Gemini](https://img.shields.io/badge/Google-Gemini_AI-blue?style=for-the-badge&logo=google)
+![Google Gemini](https://img.shields.io/badge/Google-Gemini_Vision-4285F4?style=for-the-badge&logo=google)
+![Render](https://img.shields.io/badge/Hosted_on-Render-46E3B7?style=for-the-badge&logo=render)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 </p>
 
 ---
 
-# 📖 Overview
+# 🌐 Live Demo
 
-PlantCare AI is an intelligent web application that detects plant diseases from leaf images using a **MobileNetV2 deep learning model** and provides **AI-generated treatment recommendations** powered by **Google Gemini AI**.
+### 🚀 https://plantcare-ai-9kay.onrender.com
 
-The application enables farmers, gardeners, students, and researchers to identify diseases quickly and receive actionable suggestions to improve crop health.
-
-The deep learning model is trained using the **PlantVillage Dataset**, which contains thousands of labeled images across multiple plant species and disease classes.
+Try uploading a healthy or diseased leaf image to experience AI-powered plant disease detection.
 
 ---
+
+
+# 📖 Overview
+
+PlantCare AI is an intelligent web application that detects plant diseases from leaf images using a **TensorFlow MobileNetV2 deep learning model**.
+
+Before prediction, every uploaded image is validated using **Google Gemini Vision AI** to ensure it contains a plant leaf. Images that are unrelated (such as people, vehicles, buildings, or random objects) are rejected automatically, improving prediction reliability.
+
+Once a valid leaf image is uploaded, the application predicts the disease, displays the confidence score, and generates AI-powered disease descriptions, treatment recommendations, and prevention tips using **Google Gemini AI**.
+
+The model is trained on the **PlantVillage Dataset**, containing thousands of labeled images across multiple plant species and disease classes.
 
 # ✨ Features
 
-- 🌱 Plant disease detection using MobileNetV2
-- 🤖 AI-generated treatment recommendations with Google Gemini AI
-- 📷 Upload leaf images through an intuitive web interface
-- ⚡ Fast disease prediction
+- 🌱 Plant disease detection using TensorFlow MobileNetV2
+- 🤖 Google Gemini Vision image validation
+- 📷 Accepts leaf images (including leaves held in hand)
+- 🚫 Rejects non-leaf images before prediction
 - 📊 Confidence score for predictions
-- 📚 Disease description and prevention tips
+- 💡 AI-generated disease descriptions
+- 💊 Treatment and prevention recommendations
+- ⚡ Fast prediction with optimized inference
 - 💻 Responsive Flask web application
-- 🎯 Clean and user-friendly interface
-
----
+- ☁️ Deployed on Render
 
 # 🎬 Demo
 
@@ -88,10 +112,11 @@ The deep learning model is trained using the **PlantVillage Dataset**, which con
 | Deep Learning Model | MobileNetV2 |
 | Framework | TensorFlow / Keras |
 | Dataset | PlantVillage Dataset |
-| Image Classification | Plant Disease Detection |
-| AI Assistant | Google Gemini AI |
+| Image Validation | Google Gemini Vision |
+| Disease Recommendation | Google Gemini AI |
 | Backend | Flask |
 | Frontend | HTML, CSS, JavaScript |
+| Deployment | Render |
 
 ---
 
@@ -261,19 +286,45 @@ This project is licensed under the **MIT License**.
 
 # 👨‍💻 Author
 
-**Shamith Rai M**
+## Shamith Rai M
 
-🎓 B.Tech in Artificial Intelligence & Machine Learning  
+🎓 B.Tech in Artificial Intelligence & Machine Learning
+
 🏫 Canara Engineering College, Mangalore
 
-**GitHub**
+🌐 **Live Demo**
+
+https://plantcare-ai-9kay.onrender.com
+
+💼 **LinkedIn**
+
+https://linkedin.com/in/shamith-rai-m
+
+💻 **GitHub**
 
 https://github.com/shamith-14
+
+📧 **Email**
+
+raishamith2005@gmail.com
+
+---
+
+# 🙏 Acknowledgements
+
+- TensorFlow & Keras
+- Google Gemini API
+- Flask
+- PlantVillage Dataset
+- Render Cloud Platform
+- Open Source Community
 
 ---
 
 <p align="center">
 
-⭐ If you found this project helpful, consider giving it a star!
+### ⭐ If you found this project useful, please consider giving it a star!
+
+Made with ❤️ by **Shamith Rai M**
 
 </p>
