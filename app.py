@@ -4,8 +4,6 @@ from utils.gemini_helper import get_disease_details, is_leaf_image
 import os
 import random
 
-
-
 tips = [
     "💧 Water plants early in the morning to reduce water loss through evaporation.",
     "🌿 Remove infected leaves immediately to prevent diseases from spreading.",
@@ -39,8 +37,6 @@ tips = [
     "🌱 Healthy plants are naturally more resistant to pests and diseases—provide proper nutrition and regular care."
 ]
 
-
-
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "static/uploads"
@@ -49,86 +45,79 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
-
-
 @app.route("/")
 def home():
     daily_tip = random.choice(tips)
-    return render_template(
-        "index.html",
-        daily_tip=daily_tip
-    )
-
+    return render_template("index.html", daily_tip=daily_tip)
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
 
-    # Check if an image was uploaded
     if "plant_image" not in request.files:
         return "No file uploaded."
 
     file = request.files["plant_image"]
 
-    # Check if a file was selected
     if file.filename == "":
         return "Please select an image."
 
-    # Save uploaded image
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
     file.save(filepath)
 
-    # -------------------------------
-    # Validate image using Gemini AI
-    # -------------------------------
-    if not is_leaf_image(filepath):
+    try:
+        # Validate image
+        if not is_leaf_image(filepath):
+            return render_template(
+                "result.html",
+                image=file.filename,
+                disease="Invalid Image",
+                confidence="--",
+                details="""
+                <h2>Invalid Image</h2>
+
+                <p>
+                The uploaded image does not appear to contain a clear plant leaf suitable
+                for disease detection.
+                </p>
+
+                <p>
+                Please upload a clear image of a plant leaf and try again.
+                </p>
+                """
+            )
+
+        # Predict disease
+        disease, confidence = predict_disease(filepath)
+
+        # Gemini report
+        try:
+            details = get_disease_details(disease)
+        except Exception as e:
+            print("Gemini Error:", e)
+
+            details = """
+            <h2>AI Report Unavailable</h2>
+
+            <p>
+            The disease was successfully detected, but the AI report
+            could not be generated at this time.
+            Please try again later.
+            </p>
+            """
+
         return render_template(
             "result.html",
             image=file.filename,
-            disease="Invalid Image",
-            confidence="--",
-            details="""
-            <h2>Invalid Image</h2>
-
-            <p>
-            The uploaded image does not appear to contain a clear plant leaf suitable
-            for disease detection.
-            </p>
-
-            <p>
-            Please upload a clear image of a plant leaf and try again.
-            </p>
-            """
+            disease=disease,
+            confidence=f"{confidence:.2f}%",
+            details=details
         )
 
-    # Predict disease using trained model
-    disease, confidence = predict_disease(filepath)
-
-    # Get AI-generated report from Gemini
-    try:
-        details = get_disease_details(disease)
-    except Exception as e:
-        print("Gemini Error:", e)
-
-        details = """
-        <h2>AI Report Unavailable</h2>
-
-        <p>
-        The disease was successfully detected, but the AI report
-        could not be generated at this time.
-        Please try again later.
-        </p>
-        """
-
-    # Render result page
-    return render_template(
-        "result.html",
-        image=file.filename,
-        disease=disease,
-        confidence=f"{confidence:.2f}%",
-        details=details
-    )
-    
+    finally:
+        # Always delete uploaded image
+        if os.path.exists(filepath):
+            os.remove(filepath)
 
 
 if __name__ == "__main__":

@@ -60,13 +60,7 @@ def is_leaf_image(image_path):
     """
     Validates whether the uploaded image contains
     a clear plant leaf suitable for disease prediction.
-
-    Returns:
-        True  -> Valid plant leaf
-        False -> Invalid image
     """
-
-    image = Image.open(image_path)
 
     prompt = """
 You are validating an image for a plant disease detection system.
@@ -109,10 +103,18 @@ NO
 """
 
     try:
-        response = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
-            contents=[prompt, image]
-        )
+        with Image.open(image_path) as image:
+
+            # Convert to RGB
+            image = image.convert("RGB")
+
+            # Resize to reduce RAM usage
+            image.thumbnail((512, 512))
+
+            response = client.models.generate_content(
+                model="gemini-3.5-flash-lite",
+                contents=[prompt, image]
+            )
 
         answer = response.text.strip().upper()
 
@@ -121,5 +123,5 @@ NO
     except Exception as e:
         print("Gemini Leaf Validation Error:", e)
 
-        # Allow prediction if Gemini validation fails
+        # If Gemini fails, allow prediction
         return True
